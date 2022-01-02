@@ -1,5 +1,4 @@
 package common;
-
 public final class Constants {
     public static final String OUTPUT_PATH = "output/out_";
     public static final String REF_PATH = "ref/ref_test";
@@ -16,7 +15,11 @@ public final class Constants {
      * My constants
      */
     public static final String INPUT_PATH = "tests/";
+    public static final String JSON_EXTENSION = ".json";
+    public static final String OUTPUT_DIR = "output";
     public static final String INITIAL_DATA = "initialData";
+    public static final String NUMBER_OF_YEARS = "numberOfYears";
+    public static final String SANTA_BUDGET = "santaBudget";
     public static final String CHILDREN = "children";
     public static final String ID = "id";
     public static final String LAST_NAME = "lastName";
@@ -34,6 +37,11 @@ public final class Constants {
     public static final String NEW_GIFTS = "newGifts";
     public static final String NEW_CHILDREN = "newChildren";
     public static final String CHILDREN_UPDATES = "childrenUpdates";
+    public static final Integer BABY = 5;
+    public static final Integer KID = 12;
+    public static final Integer TEEN = 18;
+
+
 
 
 
