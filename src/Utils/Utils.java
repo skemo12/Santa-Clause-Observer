@@ -4,6 +4,7 @@ package Utils;
 import common.Constants;
 import data.Child;
 import data.Database;
+import data.Santa;
 import org.json.simple.JSONObject;
 
 public class Utils {
@@ -21,5 +22,23 @@ public class Utils {
         return utils;
     }
 
+    public Child getChildById (Integer id) {
+        for (Child child : Database.getInstance().getChildren()) {
+            if (child.id.equals(id)) {
+                return child;
+            }
+        }
+        return null;
+    }
 
+    public void increaseAge () {
+        for (Child child : Database.getInstance().getChildren()) {
+            child.age++;
+        }
+    }
+    public void updateBudget (int year) {
+        Santa santa = Database.getInstance().getSanta();
+        Double newBudget = Database.getInstance().getAnnualChanges().get(year).getNewSantaBudget();
+        santa.setSantaBudget(newBudget);
+    }
 }

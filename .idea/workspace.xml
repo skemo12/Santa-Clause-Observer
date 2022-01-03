@@ -4,26 +4,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d662010a-d6c5-4bb5-92a6-5b13c2206c94" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Interface/SantaVisitorInterface.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Interface/Visitable.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Utils/Utils.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/data/AnnualChange.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/data/Baby.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/data/Child.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/data/ChildUpdate.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/data/Database.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/data/Gift.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/data/Kid.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/data/Santa.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/data/Teen.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../README.md" beforeDir="false" />
+    <list default="true" id="d662010a-d6c5-4bb5-92a6-5b13c2206c94" name="Changes" comment="InputLoader finished, working on outputCreation and passing tests (0 points), readme not done.">
+      <change afterPath="$PROJECT_DIR$/src/fileio/ChildrenChanges.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/fileio/MyWriter.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README" beforeDir="false" afterPath="$PROJECT_DIR$/README" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/checkstyle.txt" beforeDir="false" afterPath="$PROJECT_DIR$/checkstyle.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Utils/Utils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Utils/Utils.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/common/Constants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/Constants.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/input/InputLoader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/input/InputLoader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/data/AnnualChange.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/data/AnnualChange.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/data/Child.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/data/Child.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/data/Kid.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/data/Kid.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/data/Santa.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/data/Santa.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/data/Teen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/data/Teen.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/input/InputLoader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fileio/InputLoader.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/Main.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -42,6 +35,14 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="ROOT_SYNC" value="SYNC" />
+  </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
   </component>
   <component name="ProjectId" id="21v2UmCFgudLtO2NUqgyGG5QiA1" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -90,6 +91,14 @@
       <option name="presentableId" value="Default" />
       <updated>1638807258397</updated>
     </task>
+    <task id="LOCAL-00001" summary="InputLoader finished, working on outputCreation and passing tests (0 points), readme not done.">
+      <created>1641148952568</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1641148952568</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -103,5 +112,9 @@
       </map>
     </option>
     <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="InputLoader finished, working on outputCreation and passing tests (0 points), readme not done." />
+    <option name="LAST_COMMIT_MESSAGE" value="InputLoader finished, working on outputCreation and passing tests (0 points), readme not done." />
   </component>
 </project>

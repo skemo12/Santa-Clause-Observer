@@ -10,7 +10,9 @@ public class Kid extends Child implements Visitable {
                String lastName, String city, List<String> giftsPreferences) {
         super(id, age, niceScore, firstName, lastName, city, giftsPreferences);
     }
-
+    public Kid(Child child) {
+        super(child);
+    }
     @Override
     public void accept(SantaVisitorInterface visitor) {
         visitor.visit(this);

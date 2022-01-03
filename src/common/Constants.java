@@ -40,6 +40,11 @@ public final class Constants {
     public static final Integer BABY = 5;
     public static final Integer KID = 12;
     public static final Integer TEEN = 18;
+    public static final String AVERAGE_SCORE = "averageScore";
+    public static final String NICE_SCORE_HISTORY = "niceScoreHistory";
+    public static final String ASSIGNED_BUDGET = "assignedBudget";
+    public static final String RECEIVED_GIFTS = "receivedGifts";
+
 
 
 
