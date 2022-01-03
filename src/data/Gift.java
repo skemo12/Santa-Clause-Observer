@@ -1,6 +1,6 @@
 package data;
 
-public class Gift {
+public class Gift implements Comparable<Gift>{
     String productName;
     Double price;
     String category;
@@ -42,5 +42,10 @@ public class Gift {
                 ", price=" + price +
                 ", category='" + category + '\'' +
                 '}';
+    }
+
+    @Override
+    public int compareTo(Gift o) {
+        return (int) (price - o.price);
     }
 }

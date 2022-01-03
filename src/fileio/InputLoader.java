@@ -103,7 +103,7 @@ public final class InputLoader {
                     for (Object jsonGift : jsonNewGifts) {
                         Gift gift = new Gift(
                                 (String) ((JSONObject) jsonGift).get(Constants.PRODUCT_NAME),
-                                (Double) ((JSONObject) jsonGift).get(Constants.PRICE),
+                                ((Long) ((JSONObject) jsonGift).get(Constants.PRICE)).doubleValue(),
                                 (String) ((JSONObject) jsonGift).get(Constants.CATEGORY)
                         );
                         newGifts.add(gift);
@@ -119,15 +119,13 @@ public final class InputLoader {
                                         .get(Constants.GIFT_PREFERENCES);
                         List<String> giftPreferences = new ArrayList<>();
                         for (Object gift : jsonGiftsPreferences) {
-                            giftPreferences
-                                    .add((String) ((JSONObject) gift)
-                                            .toString());
+                            giftPreferences.add((String) gift);
                         }
 
                         newChildren.add(new Child(
                                 ((Long) ((JSONObject) jsonNewChild).get(Constants.ID)).intValue(),
-                                (Integer) ((JSONObject) jsonNewChild).get(Constants.AGE),
-                                (Double) ((JSONObject) jsonNewChild).get(Constants.NICE_SCORE),
+                                ((Long) ((JSONObject) jsonNewChild).get(Constants.AGE)).intValue(),
+                                ((Long) ((JSONObject) jsonNewChild).get(Constants.NICE_SCORE)).doubleValue(),
                                 (String) ((JSONObject) jsonNewChild).get(Constants.FIRST_NAME),
                                 (String) ((JSONObject) jsonNewChild).get(Constants.LAST_NAME),
                                 (String) ((JSONObject) jsonNewChild).get(Constants.CITY),
@@ -138,18 +136,20 @@ public final class InputLoader {
                     JSONArray jsonChildrenUpdates = (JSONArray) ((JSONObject) jsonAnnualChange)
                             .get(Constants.CHILDREN_UPDATES);
                     for (Object jsonChildUpdate : jsonChildrenUpdates) {
-                        Integer id = (Integer) ((JSONObject) jsonChildUpdate)
-                                .get(Constants.ID);
-                        Double niceScore = (Double) ((JSONObject) jsonChildUpdate)
-                                .get(Constants.NICE_SCORE);
+                        Integer id = ((Long) ((JSONObject) jsonChildUpdate)
+                                .get(Constants.ID)).intValue();
+                        Double niceScore = null;
+                        if ( ((JSONObject) jsonChildUpdate)
+                                .get(Constants.NICE_SCORE) != null) {
+                            niceScore = ((Long) ((JSONObject) jsonChildUpdate)
+                                    .get(Constants.NICE_SCORE)).doubleValue();
+                        }
+
                         List<String> giftsPreferences = new ArrayList<>();
                         JSONArray jsonGiftsPreferences =  (JSONArray) ((JSONObject) jsonChildUpdate)
                                 .get(Constants.GIFT_PREFERENCES);
                         for (Object jsonGiftPreferences : jsonGiftsPreferences) {
-                            giftsPreferences
-                                    .add((String) ((JSONObject)
-                                            jsonGiftPreferences)
-                                            .toString());
+                            giftsPreferences.add((String) jsonGiftPreferences);
                         }
                         childrenUpdates.add(new ChildUpdate(id, niceScore,
                                 giftsPreferences));

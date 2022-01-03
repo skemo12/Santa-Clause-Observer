@@ -26,8 +26,8 @@ public class Child implements Comparable<Child> {
         this.firstName = child.firstName;
         this.lastName = child.lastName;
         this.city = child.city;
-        this.giftsPreferences = child.giftsPreferences;
-        this.receivedGifts = child.receivedGifts;
+        this.giftsPreferences = new ArrayList<>(child.giftsPreferences);
+        this.receivedGifts = new ArrayList<>(child.receivedGifts);
         this.averageScore = child.averageScore;
         this.assignedBudget = child.assignedBudget;
         this.niceScoreHistory = new ArrayList<>(child.niceScoreHistory);
@@ -43,6 +43,7 @@ public class Child implements Comparable<Child> {
         this.city = city;
         this.giftsPreferences = giftsPreferences;
         this.niceScoreHistory = new ArrayList<>();
+        this.niceScoreHistory.add(niceScore);
         this.receivedGifts = new ArrayList<>();
     }
 

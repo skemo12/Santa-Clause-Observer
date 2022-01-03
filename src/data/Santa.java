@@ -4,7 +4,9 @@ import Interface.SantaVisitorInterface;
 import Utils.Utils;
 import common.Constants;
 
+import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.ListIterator;
 
@@ -43,6 +45,7 @@ public class Santa implements SantaVisitorInterface {
         }
         budgetUnit = santaBudget / sum;
     }
+
     public void giveGifts() {
         updateScoresAndAge();
         List<Child> children = Database.getInstance().getChildren();
@@ -55,18 +58,27 @@ public class Santa implements SantaVisitorInterface {
             child.assignedBudget = budgetChild;
             double currBudget = 0.0;
             for (String giftPreferences : child.giftsPreferences) {
+                if (Double.compare(currBudget, budgetChild) == 0) {
+                    break;
+                }
+                List<Gift> giftsPerCategory = new ArrayList<>();
                 for (Gift gift : giftsList) {
                     if(gift.category.equalsIgnoreCase(giftPreferences)){
                         if (Double.compare(gift.price + currBudget, budgetChild) < 0){
-                            child.receivedGifts.add(gift);
-                            currBudget += gift.price;
-                            if (currBudget > budgetChild) {
+                            giftsPerCategory.add(gift);
+
+                            if (Double.compare(currBudget, budgetChild) == 0) {
                                 break;
                             }
                         }
                     }
                 }
-                if (currBudget > budgetChild) {
+                if (!giftsPerCategory.isEmpty()) {
+                    Collections.sort(giftsPerCategory);
+                    child.receivedGifts.add(giftsPerCategory.get(0));
+                    currBudget += giftsPerCategory.get(0).price;
+                }
+                if (Double.compare(currBudget, budgetChild) == 0) {
                     break;
                 }
             }
@@ -79,9 +91,9 @@ public class Santa implements SantaVisitorInterface {
         ListIterator<Child> childListIterator = Database.getInstance().getChildren().listIterator();
         while (childListIterator.hasNext()){
             Child child = childListIterator.next();
-            if (child.age <= Constants.BABY) {
+            if (child.age < Constants.BABY) {
                 updatedChildren.add(new Baby(child));
-            } else if (child.age <= Constants.KID) {
+            } else if (child.age < Constants.KID) {
                 updatedChildren.add(new Kid(child));
             } else if (child.age <= Constants.TEEN) {
                 updatedChildren.add(new Teen(child));
@@ -92,9 +104,9 @@ public class Santa implements SantaVisitorInterface {
         ListIterator<Child> updatedChildListIterator = updatedChildren.listIterator();
         while (updatedChildListIterator.hasNext()){
             Child child = updatedChildListIterator.next();
-            if (child.age <= Constants.BABY) {
+            if (child.age < Constants.BABY) {
                 ((Baby) child).accept(this);
-            } else if (child.age <= Constants.KID) {
+            } else if (child.age < Constants.KID) {
                 ((Kid) child).accept(this);
             } else if (child.age <= Constants.TEEN) {
                 ((Teen) child).accept(this);
@@ -103,14 +115,13 @@ public class Santa implements SantaVisitorInterface {
             }
         }
         for (Child updatedChild : updatedChildren) {
-            Child child = Utils.getInstance().getChildById(updatedChild.id);
-            Database.getInstance().getChildren().set(updatedChild.id, updatedChild);
+            int index = Utils.getInstance().getIndexOfChild(updatedChild);
+            Database.getInstance().getChildren().set(index, updatedChild);
         }
     }
     @Override
     public void visit(Baby child) {
         child.averageScore = 10.0;
-        child.niceScoreHistory.add(10.0);
     }
 
     @Override
@@ -122,7 +133,6 @@ public class Santa implements SantaVisitorInterface {
             }
             average = average / child.niceScoreHistory.size();
             child.averageScore = average;
-            child.niceScoreHistory.add(average);
         }
     }
 
@@ -130,14 +140,13 @@ public class Santa implements SantaVisitorInterface {
     public void visit(Teen child) {
         if (child.niceScoreHistory != null) {
             double average = 0.0;
-            double divider = 1.0;
+            double divider = 0.0;
             for (Double score : child.niceScoreHistory) {
                 average += score * ( child.niceScoreHistory.indexOf(score) + 1);
-                divider += child.niceScoreHistory.indexOf(score);
+                divider += child.niceScoreHistory.indexOf(score) + 1.0;
             }
             average = average / divider;
             child.averageScore = average;
-            child.niceScoreHistory.add(average);
         }
     }
 }
