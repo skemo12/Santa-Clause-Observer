@@ -1,21 +1,25 @@
 package data;
 
-import Interface.SantaVisitorInterface;
-import Utils.Utils;
+import interfaces.SantaVisitorInterface;
+import utils.Utils;
 import common.Constants;
 
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.ListIterator;
 
-public class Santa implements SantaVisitorInterface {
-    Double santaBudget;
-    List<Gift> giftsList;
-    Double budgetUnit;
+public final class Santa implements SantaVisitorInterface {
+    /**
+     * Class for Santa
+     * Uses visitor pattern
+     * Is the visitor
+     */
+    private Double santaBudget;
+    private List<Gift> giftsList;
+    private Double budgetUnit;
 
-    public Santa(Double santaBudget, List<Gift> giftsList) {
+    public Santa(final Double santaBudget, final List<Gift> giftsList) {
         this.santaBudget = santaBudget;
         this.giftsList = giftsList;
     }
@@ -24,7 +28,7 @@ public class Santa implements SantaVisitorInterface {
         return santaBudget;
     }
 
-    public void setSantaBudget(Double santaBudget) {
+    public void setSantaBudget(final Double santaBudget) {
         this.santaBudget = santaBudget;
     }
 
@@ -33,38 +37,53 @@ public class Santa implements SantaVisitorInterface {
         return giftsList;
     }
 
-    public void setGiftsList(List<Gift> giftsList) {
+    public void setGiftsList(final List<Gift> giftsList) {
         this.giftsList = giftsList;
     }
 
-    public void updateBudgetUnit () {
+    public Double getBudgetUnit() {
+        return budgetUnit;
+    }
+
+    public void setBudgetUnit(final Double budgetUnit) {
+        this.budgetUnit = budgetUnit;
+    }
+
+    /**
+     * Updates Santa's budgetUnit
+     */
+    public void updateBudgetUnit() {
         double sum = 0;
         List<Child> children = Database.getInstance().getChildren();
         for (Child child : children) {
-            sum += child.averageScore;
+            sum += child.getAverageScore();
         }
         budgetUnit = santaBudget / sum;
     }
 
+    /**
+     * Gives every child gifts.
+     */
     public void giveGifts() {
-        updateScoresAndAge();
+        calculateScores();
         List<Child> children = Database.getInstance().getChildren();
         for (Child child : children) {
-            child.receivedGifts.clear();
+            child.getReceivedGifts().clear();
         }
         updateBudgetUnit();
         for (Child child : children) {
-            double budgetChild = budgetUnit * child.averageScore;
-            child.assignedBudget = budgetChild;
+            double budgetChild = budgetUnit * child.getAverageScore();
+            child.setAssignedBudget(budgetChild);
             double currBudget = 0.0;
-            for (String giftPreferences : child.giftsPreferences) {
+            for (String giftPreferences : child.getGiftsPreferences()) {
                 if (Double.compare(currBudget, budgetChild) == 0) {
                     break;
                 }
                 List<Gift> giftsPerCategory = new ArrayList<>();
                 for (Gift gift : giftsList) {
-                    if(gift.category.equalsIgnoreCase(giftPreferences)){
-                        if (Double.compare(gift.price + currBudget, budgetChild) < 0){
+                    if (gift.getCategory().equalsIgnoreCase(giftPreferences)) {
+                        double auxBudget = gift.getPrice() + currBudget;
+                        if (Double.compare(auxBudget, budgetChild) < 0) {
                             giftsPerCategory.add(gift);
 
                             if (Double.compare(currBudget, budgetChild) == 0) {
@@ -75,8 +94,8 @@ public class Santa implements SantaVisitorInterface {
                 }
                 if (!giftsPerCategory.isEmpty()) {
                     Collections.sort(giftsPerCategory);
-                    child.receivedGifts.add(giftsPerCategory.get(0));
-                    currBudget += giftsPerCategory.get(0).price;
+                    child.getReceivedGifts().add(giftsPerCategory.get(0));
+                    currBudget += giftsPerCategory.get(0).getPrice();
                 }
                 if (Double.compare(currBudget, budgetChild) == 0) {
                     break;
@@ -85,68 +104,87 @@ public class Santa implements SantaVisitorInterface {
         }
     }
 
-    public void updateScoresAndAge() {
+    /**
+     * Calculates the score for every child by applying the visitor method.
+     */
+    public void calculateScores() {
 
-        List<Child> updatedChildren = new ArrayList<>();
-        ListIterator<Child> childListIterator = Database.getInstance().getChildren().listIterator();
-        while (childListIterator.hasNext()){
-            Child child = childListIterator.next();
-            if (child.age < Constants.BABY) {
-                updatedChildren.add(new Baby(child));
-            } else if (child.age < Constants.KID) {
-                updatedChildren.add(new Kid(child));
-            } else if (child.age <= Constants.TEEN) {
-                updatedChildren.add(new Teen(child));
-            } else {
-                childListIterator.remove();
-            }
-        }
-        ListIterator<Child> updatedChildListIterator = updatedChildren.listIterator();
-        while (updatedChildListIterator.hasNext()){
+        List<Child> updatedChildren = filterChildByAge();
+        ListIterator<Child> updatedChildListIterator = updatedChildren
+                .listIterator();
+
+        while (updatedChildListIterator.hasNext()) {
             Child child = updatedChildListIterator.next();
-            if (child.age < Constants.BABY) {
+            if (child.getAge() < Constants.BABY) {
                 ((Baby) child).accept(this);
-            } else if (child.age < Constants.KID) {
+            } else if (child.getAge() < Constants.KID) {
                 ((Kid) child).accept(this);
-            } else if (child.age <= Constants.TEEN) {
+            } else if (child.getAge() <= Constants.TEEN) {
                 ((Teen) child).accept(this);
             } else {
                 updatedChildListIterator.remove();
             }
         }
+
         for (Child updatedChild : updatedChildren) {
             int index = Utils.getInstance().getIndexOfChild(updatedChild);
             Database.getInstance().getChildren().set(index, updatedChild);
         }
+
     }
-    @Override
-    public void visit(Baby child) {
-        child.averageScore = 10.0;
+
+    /**
+     * Creates new list of children by categories (Baby, Kid, Teen)
+     */
+    public List<Child> filterChildByAge() {
+
+        List<Child> updatedChildren = new ArrayList<>();
+        ListIterator<Child> childListIterator = Database.getInstance()
+                .getChildren().listIterator();
+
+        while (childListIterator.hasNext()) {
+            Child child = childListIterator.next();
+            if (child.getAge() < Constants.BABY) {
+                updatedChildren.add(new Baby(child));
+            } else if (child.getAge() < Constants.KID) {
+                updatedChildren.add(new Kid(child));
+            } else if (child.getAge() <= Constants.TEEN) {
+                updatedChildren.add(new Teen(child));
+            } else {
+                childListIterator.remove();
+            }
+        }
+        return updatedChildren;
     }
 
     @Override
-    public void visit(Kid child) {
-        if (child.niceScoreHistory != null) {
+    public void visit(final Baby child) {
+        child.setAverageScore(Constants.MAX_GRADE);
+    }
+
+    @Override
+    public void visit(final Kid child) {
+        if (child.getNiceScoreHistory() != null) {
             Double average = 0.0;
-            for (Double score : child.niceScoreHistory) {
+            for (Double score : child.getNiceScoreHistory()) {
                 average += score;
             }
-            average = average / child.niceScoreHistory.size();
-            child.averageScore = average;
+            average = average / child.getNiceScoreHistory().size();
+            child.setAverageScore(average);
         }
     }
 
     @Override
-    public void visit(Teen child) {
-        if (child.niceScoreHistory != null) {
+    public void visit(final Teen child) {
+        if (child.getNiceScoreHistory() != null) {
             double average = 0.0;
             double divider = 0.0;
-            for (Double score : child.niceScoreHistory) {
-                average += score * ( child.niceScoreHistory.indexOf(score) + 1);
-                divider += child.niceScoreHistory.indexOf(score) + 1.0;
+            for (Double score : child.getNiceScoreHistory()) {
+                average += score * (child.getNiceScoreHistory().indexOf(score) + 1);
+                divider += child.getNiceScoreHistory().indexOf(score) + 1.0;
             }
             average = average / divider;
-            child.averageScore = average;
+            child.setAverageScore(average);
         }
     }
 }

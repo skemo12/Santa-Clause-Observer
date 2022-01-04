@@ -1,4 +1,5 @@
 package common;
+
 public final class Constants {
     public static final String OUTPUT_PATH = "output/out_";
     public static final String REF_PATH = "ref/ref_test";
@@ -40,10 +41,8 @@ public final class Constants {
     public static final Integer BABY = 5;
     public static final Integer KID = 12;
     public static final Integer TEEN = 18;
-    public static final String AVERAGE_SCORE = "averageScore";
-    public static final String NICE_SCORE_HISTORY = "niceScoreHistory";
-    public static final String ASSIGNED_BUDGET = "assignedBudget";
-    public static final String RECEIVED_GIFTS = "receivedGifts";
+    public static final Double MAX_GRADE = 10.0;
+
 
 
 

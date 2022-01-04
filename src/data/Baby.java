@@ -1,21 +1,24 @@
 package data;
 
-import Interface.SantaVisitorInterface;
-import Interface.Visitable;
+import interfaces.SantaVisitorInterface;
+import interfaces.Visitable;
 
 import java.util.List;
 
-public class Baby extends Child implements Visitable {
+public final class Baby extends Child implements Visitable {
 
-    public Baby(Integer id, Integer age, Double niceScore, String firstName,
-                String lastName, String city, List<String> giftsPreferences) {
+    public Baby(final Integer id, final Integer age, final Double niceScore,
+                final String firstName, final String lastName,
+                final String city, final List<String> giftsPreferences) {
         super(id, age, niceScore, firstName, lastName, city, giftsPreferences);
     }
-    public Baby(Child child) {
+
+    public Baby(final Child child) {
         super(child);
     }
+
     @Override
-    public void accept(SantaVisitorInterface visitor) {
+    public void accept(final SantaVisitorInterface visitor) {
         visitor.visit(this);
     }
 }

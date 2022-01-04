@@ -1,22 +1,22 @@
 package data;
 
-import Utils.Utils;
-import jdk.jshell.execution.Util;
+import utils.Utils;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Database {
-    Integer numberOfYears;
-    Santa santa;
-    List<Child> children;
-    List<AnnualChange> annualChanges;
+public final class Database {
+    private Integer numberOfYears;
+    private Santa santa;
+    private List<Child> children;
+    private List<AnnualChanges> annualChanges;
 
     /**
      * Make it singleton
      */
     private static Database database = null;
+
     /**
      * Singleton function
      */
@@ -31,7 +31,7 @@ public class Database {
         return numberOfYears;
     }
 
-    public void setNumberOfYears(Integer numberOfYears) {
+    public void setNumberOfYears(final Integer numberOfYears) {
         this.numberOfYears = numberOfYears;
     }
 
@@ -39,7 +39,7 @@ public class Database {
         return santa;
     }
 
-    public void setSanta(Santa santa) {
+    public void setSanta(final Santa santa) {
         this.santa = santa;
     }
 
@@ -47,22 +47,30 @@ public class Database {
         return children;
     }
 
-    public void setChildren(List<Child> children) {
+    public void setChildren(final List<Child> children) {
         this.children = children;
     }
 
-    public List<AnnualChange> getAnnualChanges() {
+    public List<AnnualChanges> getAnnualChanges() {
         return annualChanges;
     }
 
-    public void setAnnualChanges(List<AnnualChange> annualChanges) {
+    public void setAnnualChanges(final List<AnnualChanges> annualChanges) {
         this.annualChanges = annualChanges;
     }
 
-    public void updateDatabaseByYear(int i) {
-        AnnualChange annualChange = Database.getInstance().annualChanges.get(i);
-        Database.getInstance().getSanta().setSantaBudget(annualChange.newSantaBudget);
-        for (Gift gift :annualChange.getNewGifts()) {
+    /**
+     * Applies annual changes to database
+     */
+    public void updateDatabaseByYear(final int i) {
+        AnnualChanges annualChange = Database.getInstance()
+                .getAnnualChanges().get(i);
+
+        if (annualChange.getNewSantaBudget() != null) {
+            Database.getInstance().getSanta()
+                    .setSantaBudget(annualChange.getNewSantaBudget());
+        }
+        for (Gift gift : annualChange.getNewGifts()) {
             Database.getInstance().getSanta().getGiftsList().add(gift);
         }
 
@@ -71,30 +79,33 @@ public class Database {
         }
         Collections.sort(Database.getInstance().getChildren());
 
-        for (ChildUpdate childUpdate : annualChange.childrenUpdates) {
-            Child child = Utils.getInstance().getChildById(childUpdate.id);
+        for (ChildUpdate childUpdate : annualChange.getChildrenUpdates()) {
+            Child child = Utils.getInstance().getChildById(childUpdate.getId());
             if (child != null) {
-                if (childUpdate.niceScore != null) {
-                    child.niceScoreHistory.add(childUpdate.niceScore);
-                    child.niceScore = childUpdate.niceScore;
+                if (childUpdate.getNiceScore() != null) {
+                    child.getNiceScoreHistory().add(childUpdate.getNiceScore());
+                    child.setNiceScore(childUpdate.getNiceScore());
                 }
                 List<String> giftPrefs = new ArrayList<>();
-                for (String gift : childUpdate.giftsPreferences) {
+                for (String gift : childUpdate.getGiftsPreferences()) {
                     if (!giftPrefs.contains(gift)) {
                         giftPrefs.add(gift);
                     }
                 }
-                for (String gift : child.giftsPreferences) {
+                for (String gift : child.getGiftsPreferences()) {
                     if (!giftPrefs.contains(gift)) {
                         giftPrefs.add(gift);
                     }
                 }
-                child.giftsPreferences = giftPrefs;
+                child.setGiftsPreferences(giftPrefs);
             }
 
         }
     }
-    public static void renewDatabase (){
+    /**
+     * Completely resets database to prepare for new input file.
+     */
+    public static void renewDatabase() {
         database = null;
         database = new Database();
     }

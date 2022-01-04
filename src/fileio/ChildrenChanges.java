@@ -1,20 +1,18 @@
 package fileio;
 
 import data.Child;
-import data.Database;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
-public class ChildrenChanges {
-    List<Child> children;
+public final class ChildrenChanges {
+    private List<Child> children;
 
-    public ChildrenChanges(List<Child> children) {
-        this.children = new ArrayList<>();
+    public ChildrenChanges(final List<Child> children) {
+        this.setChildren(new ArrayList<>());
         for (Child child : children) {
             Child newChild = new Child(child);
-            this.children.add(newChild);
+            this.getChildren().add(newChild);
         }
 
     }
@@ -23,7 +21,7 @@ public class ChildrenChanges {
         return children;
     }
 
-    public void setChildren(List<Child> children) {
+    public void setChildren(final List<Child> children) {
         this.children = children;
     }
 }

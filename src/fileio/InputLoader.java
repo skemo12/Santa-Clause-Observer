@@ -1,7 +1,12 @@
 package fileio;
 
 import common.Constants;
-import data.*;
+import data.Database;
+import data.Child;
+import data.Gift;
+import data.AnnualChanges;
+import data.ChildUpdate;
+import data.Santa;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -31,8 +36,6 @@ public final class InputLoader {
      */
     public void readData() {
         JSONParser jsonParser = new JSONParser();
-        List<Child> children = new ArrayList<>();
-
         try {
             JSONObject jsonObject = (JSONObject) jsonParser
                     .parse(new FileReader(inputPath));
@@ -40,134 +43,141 @@ public final class InputLoader {
                     .get(Constants.INITIAL_DATA);
             JSONArray jsonChildren = (JSONArray) initialData
                     .get(Constants.CHILDREN);
-            Double santaBudget = ((Long) ((JSONObject) jsonObject)
+            Double santaBudget = ((Long) (jsonObject)
                     .get(Constants.SANTA_BUDGET)).doubleValue();
-            Integer numberOfYears = ((Long) ((JSONObject) jsonObject)
+            Integer numberOfYears = ((Long) (jsonObject)
                     .get(Constants.NUMBER_OF_YEARS)).intValue();
             JSONArray jsonSantaGiftsList = (JSONArray) initialData.
                     get(Constants.SANTA_GIFTS_LIST);
             JSONArray jsonAnnualChanges = (JSONArray) jsonObject
                     .get(Constants.ANNUAL_CHANGES);
 
-            if (jsonChildren != null) {
-                for (Object jsonChild : jsonChildren) {
-                    JSONArray jsonGiftsPreferences = (JSONArray)
-                            ((JSONObject) jsonChild)
-                            .get(Constants.GIFT_PREFERENCES);
-                    List<String> giftPreferences = new ArrayList<>();
-                    for (Object gift : jsonGiftsPreferences) {
-                        giftPreferences.add(((String) gift));
-                    }
-                    children.add(new Child(
-                            ((Long) ((JSONObject) jsonChild).get(Constants.ID)).intValue(),
-                            ((Long) ((JSONObject) jsonChild).get(Constants.AGE)).intValue(),
-                            ((Long) ((JSONObject) jsonChild).get(Constants.NICE_SCORE)).doubleValue(),
-                            (String) ((JSONObject) jsonChild).get(Constants.FIRST_NAME),
-                            (String) ((JSONObject) jsonChild).get(Constants.LAST_NAME),
-                            (String) ((JSONObject) jsonChild).get(Constants.CITY),
-                            giftPreferences));
-                }
-            } else {
-                System.out.println("NU EXISTA COPII");}
 
-            List<Gift> giftList = new ArrayList<>();
-            if (jsonSantaGiftsList != null) {
-                for (Object jsonGift : jsonSantaGiftsList) {
-                    Gift gift = new Gift(
-                            (String) ((JSONObject) jsonGift).get(Constants.PRODUCT_NAME),
-                            ((Long) ((JSONObject) jsonGift).get(Constants.PRICE)).doubleValue(),
-                            (String) ((JSONObject) jsonGift).get(Constants.CATEGORY)
-                    );
-                    giftList.add(gift);
-                }
-            }
+            List<Child> children = readChildList(jsonChildren);
+            List<Gift> giftList = readGiftsList(jsonSantaGiftsList);
 
-            List<AnnualChange> annualChanges = new ArrayList<>();
-            Double newSantaBudget = santaBudget;
-            if (jsonAnnualChanges != null) {
-                for (Object jsonAnnualChange : jsonAnnualChanges) {
+            List<AnnualChanges> annualChanges = readAnnualChanges(jsonAnnualChanges);
 
-                    if ( ((JSONObject) jsonAnnualChange)
-                            .get(Constants.NEW_SANTA_BUDGET) != null) {
-                        newSantaBudget =
-                                ((Long) ((JSONObject) jsonAnnualChange)
-                                        .get(Constants.NEW_SANTA_BUDGET))
-                                        .doubleValue();
-                    }
-
-
-
-                    List<Gift> newGifts = new ArrayList<>();
-                    JSONArray jsonNewGifts = (JSONArray) ((JSONObject) jsonAnnualChange)
-                            .get(Constants.NEW_GIFTS);
-                    for (Object jsonGift : jsonNewGifts) {
-                        Gift gift = new Gift(
-                                (String) ((JSONObject) jsonGift).get(Constants.PRODUCT_NAME),
-                                ((Long) ((JSONObject) jsonGift).get(Constants.PRICE)).doubleValue(),
-                                (String) ((JSONObject) jsonGift).get(Constants.CATEGORY)
-                        );
-                        newGifts.add(gift);
-                    }
-
-                    List<Child> newChildren = new ArrayList<>();
-                    JSONArray jsonNewChildren = (JSONArray) ((JSONObject) jsonAnnualChange)
-                            .get(Constants.NEW_CHILDREN);
-                    for (Object jsonNewChild : jsonNewChildren) {
-
-                        JSONArray jsonGiftsPreferences = (JSONArray)
-                                ((JSONObject) jsonNewChild)
-                                        .get(Constants.GIFT_PREFERENCES);
-                        List<String> giftPreferences = new ArrayList<>();
-                        for (Object gift : jsonGiftsPreferences) {
-                            giftPreferences.add((String) gift);
-                        }
-
-                        newChildren.add(new Child(
-                                ((Long) ((JSONObject) jsonNewChild).get(Constants.ID)).intValue(),
-                                ((Long) ((JSONObject) jsonNewChild).get(Constants.AGE)).intValue(),
-                                ((Long) ((JSONObject) jsonNewChild).get(Constants.NICE_SCORE)).doubleValue(),
-                                (String) ((JSONObject) jsonNewChild).get(Constants.FIRST_NAME),
-                                (String) ((JSONObject) jsonNewChild).get(Constants.LAST_NAME),
-                                (String) ((JSONObject) jsonNewChild).get(Constants.CITY),
-                                giftPreferences));
-                    }
-
-                    List<ChildUpdate> childrenUpdates = new ArrayList<>();
-                    JSONArray jsonChildrenUpdates = (JSONArray) ((JSONObject) jsonAnnualChange)
-                            .get(Constants.CHILDREN_UPDATES);
-                    for (Object jsonChildUpdate : jsonChildrenUpdates) {
-                        Integer id = ((Long) ((JSONObject) jsonChildUpdate)
-                                .get(Constants.ID)).intValue();
-                        Double niceScore = null;
-                        if ( ((JSONObject) jsonChildUpdate)
-                                .get(Constants.NICE_SCORE) != null) {
-                            niceScore = ((Long) ((JSONObject) jsonChildUpdate)
-                                    .get(Constants.NICE_SCORE)).doubleValue();
-                        }
-
-                        List<String> giftsPreferences = new ArrayList<>();
-                        JSONArray jsonGiftsPreferences =  (JSONArray) ((JSONObject) jsonChildUpdate)
-                                .get(Constants.GIFT_PREFERENCES);
-                        for (Object jsonGiftPreferences : jsonGiftsPreferences) {
-                            giftsPreferences.add((String) jsonGiftPreferences);
-                        }
-                        childrenUpdates.add(new ChildUpdate(id, niceScore,
-                                giftsPreferences));
-                    }
-                    annualChanges.add(new AnnualChange(newSantaBudget, newGifts,
-                            newChildren, childrenUpdates));
-                }
-            }
             Database.getInstance().setNumberOfYears(numberOfYears);
             Database.getInstance().setChildren(children);
             Database.getInstance().setAnnualChanges(annualChanges);
-            Santa santa = new Santa(santaBudget, giftList);
-            Database.getInstance().setSanta(santa);
+            Database.getInstance().setSanta(new Santa(santaBudget, giftList));
 
 
         } catch (ParseException | IOException e) {
             e.printStackTrace();
         }
 
+    }
+    /**
+     * Creates Children list from jsonArray
+     */
+    public List<Child> readChildList(final JSONArray jsonChildren) {
+        List<Child> children = new ArrayList<>();
+        if (jsonChildren != null) {
+            for (Object jsonChild : jsonChildren) {
+                JSONArray jsonGiftsPreferences = (JSONArray)
+                        ((JSONObject) jsonChild)
+                                .get(Constants.GIFT_PREFERENCES);
+                List<String> giftPreferences = new ArrayList<>();
+                for (Object gift : jsonGiftsPreferences) {
+                    giftPreferences.add(((String) gift));
+                }
+                children.add(new Child(
+                        ((Long) ((JSONObject) jsonChild)
+                                .get(Constants.ID)).intValue(),
+                        ((Long) ((JSONObject) jsonChild)
+                                .get(Constants.AGE)).intValue(),
+                        ((Long) ((JSONObject) jsonChild)
+                                .get(Constants.NICE_SCORE)).doubleValue(),
+                        (String) ((JSONObject) jsonChild)
+                                .get(Constants.FIRST_NAME),
+                        (String) ((JSONObject) jsonChild)
+                                .get(Constants.LAST_NAME),
+                        (String) ((JSONObject) jsonChild)
+                                .get(Constants.CITY),
+                        giftPreferences));
+            }
+        }
+        return children;
+    }
+
+    /**
+     * Creates Gift list from jsonArray
+     */
+    public List<Gift> readGiftsList(final JSONArray jsonSantaGiftsList) {
+        List<Gift> giftList = new ArrayList<>();
+        if (jsonSantaGiftsList != null) {
+            for (Object jsonGift : jsonSantaGiftsList) {
+                Gift gift = new Gift(
+                        (String) ((JSONObject) jsonGift)
+                                .get(Constants.PRODUCT_NAME),
+                        ((Long) ((JSONObject) jsonGift)
+                                .get(Constants.PRICE)).doubleValue(),
+                        (String) ((JSONObject) jsonGift)
+                                .get(Constants.CATEGORY)
+                );
+                giftList.add(gift);
+            }
+        }
+        return giftList;
+    }
+    /**
+     * Creates AnnualChanges list from jsonArray
+     */
+    public List<AnnualChanges> readAnnualChanges(
+            final JSONArray jsonAnnualChanges) {
+        List<AnnualChanges> annualChanges = new ArrayList<>();
+        Double newSantaBudget = null;
+        if (jsonAnnualChanges != null) {
+            for (Object jsonAnnualChange : jsonAnnualChanges) {
+
+                if (((JSONObject) jsonAnnualChange)
+                        .get(Constants.NEW_SANTA_BUDGET) != null) {
+                    newSantaBudget =
+                            ((Long) ((JSONObject) jsonAnnualChange)
+                                    .get(Constants.NEW_SANTA_BUDGET))
+                                    .doubleValue();
+                }
+
+                JSONArray jsonNewGifts = (JSONArray)
+                        ((JSONObject) jsonAnnualChange)
+                                .get(Constants.NEW_GIFTS);
+                List<Gift> newGifts = readGiftsList(jsonNewGifts);
+
+                JSONArray jsonNewChildren = (JSONArray)
+                        ((JSONObject) jsonAnnualChange)
+                                .get(Constants.NEW_CHILDREN);
+                List<Child> newChildren = readChildList(jsonNewChildren);
+
+                List<ChildUpdate> childrenUpdates = new ArrayList<>();
+                JSONArray jsonChildrenUpdates = (JSONArray)
+                        ((JSONObject) jsonAnnualChange)
+                                .get(Constants.CHILDREN_UPDATES);
+                for (Object jsonChildUpdate : jsonChildrenUpdates) {
+                    Integer id = ((Long) ((JSONObject) jsonChildUpdate)
+                            .get(Constants.ID)).intValue();
+                    Double niceScore = null;
+                    if (((JSONObject) jsonChildUpdate)
+                            .get(Constants.NICE_SCORE) != null) {
+                        niceScore = ((Long) ((JSONObject) jsonChildUpdate)
+                                .get(Constants.NICE_SCORE)).doubleValue();
+                    }
+
+                    List<String> giftsPreferences = new ArrayList<>();
+                    JSONArray jsonGiftsPreferences = (JSONArray)
+                            ((JSONObject) jsonChildUpdate)
+                                    .get(Constants.GIFT_PREFERENCES);
+                    for (Object jsonGiftPreference : jsonGiftsPreferences) {
+                        giftsPreferences.add((String) jsonGiftPreference);
+                    }
+                    childrenUpdates.add(new ChildUpdate(id, niceScore,
+                            giftsPreferences));
+                }
+                annualChanges.add(new AnnualChanges(newSantaBudget, newGifts,
+                        newChildren, childrenUpdates));
+            }
+        }
+        return annualChanges;
     }
 }

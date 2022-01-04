@@ -1,21 +1,22 @@
 package data;
 
-public class Gift implements Comparable<Gift>{
-    String productName;
-    Double price;
-    String category;
+public final class Gift implements Comparable<Gift> {
+    private String productName;
+    private Double price;
+    private String category;
 
-    public Gift(String productName, Double price, String category) {
-        this.productName = productName;
-        this.price = price;
-        this.category = category;
+    public Gift(final String productName, final Double price,
+                final String category) {
+        this.setProductName(productName);
+        this.setPrice(price);
+        this.setCategory(category);
     }
 
     public String getProductName() {
         return productName;
     }
 
-    public void setProductName(String productName) {
+    public void setProductName(final String productName) {
         this.productName = productName;
     }
 
@@ -23,7 +24,7 @@ public class Gift implements Comparable<Gift>{
         return price;
     }
 
-    public void setPrice(Double price) {
+    public void setPrice(final Double price) {
         this.price = price;
     }
 
@@ -31,21 +32,12 @@ public class Gift implements Comparable<Gift>{
         return category;
     }
 
-    public void setCategory(String category) {
+    public void setCategory(final String category) {
         this.category = category;
     }
 
     @Override
-    public String toString() {
-        return "Gift{" +
-                "productName='" + productName + '\'' +
-                ", price=" + price +
-                ", category='" + category + '\'' +
-                '}';
-    }
-
-    @Override
-    public int compareTo(Gift o) {
-        return (int) (price - o.price);
+    public int compareTo(final Gift o) {
+        return (int) (getPrice() - o.getPrice());
     }
 }

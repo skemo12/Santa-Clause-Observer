@@ -2,86 +2,47 @@ package fileio;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import common.Constants;
-import data.Child;
-import data.Database;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
 
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.util.LinkedHashMap;
 
-public class MyWriter {
+public final class MyWriter {
 
-    FileWriter myWriter;
-    String filename;
-    ObjectMapper mapper;
-    JSONObject outputJSON;
-    JSONArray annualChildrenJSON;
+    private String filename;
+    private ObjectMapper mapper;
 
-    public MyWriter(String filename) {
+    public MyWriter(final String filename) {
+
+        this.setFilename(filename);
+        this.setMapper(new ObjectMapper());
+        this.getMapper().configure(SerializationFeature.INDENT_OUTPUT, true);
+
+    }
+    /**
+     * Writes the output to the JSON file with which the writer was created.
+     */
+    public void closeJSON(final AnnualChildren annualChildren) {
         try {
-
-        this.myWriter = new FileWriter(filename);
-
+            this.getMapper().writeValue(
+                    new File(getFilename()), annualChildren);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        this.filename = filename;
-        this.mapper = new ObjectMapper();
-        this.mapper.configure(SerializationFeature.INDENT_OUTPUT, true);
-        this.outputJSON = new JSONObject();
-        this.annualChildrenJSON = new JSONArray();
     }
 
-//    public void write() {
-//        File output = new File(Constants.OUTPUT_DIR);
-//        boolean check;
-//        if (output.isDirectory()) {
-//            check = true;
-//        } else {
-//            check = output.mkdir();
-//        }
-//        if (check) {
-//
-//
-//                for (Child child : Database.getInstance().getChildren()) {
-//                    JSONArray childrenArray = new JSONArray();
-//                    JSONObject children = new JSONObject();
-//                    LinkedHashMap characteristics = new LinkedHashMap();
-//
-//                    characteristics.put(Constants.ID, child.id);
-//                    characteristics.put(Constants.LAST_NAME, child.lastName);
-//                    characteristics.put(Constants.FIRST_NAME, child.firstName);
-//                    characteristics.put(Constants.CITY, child.city);
-//                    characteristics.put(Constants.AGE, child.age);
-//                    characteristics.put(Constants.GIFT_PREFERENCES, child.giftsPreferences);
-//                    characteristics.put(Constants.AVERAGE_SCORE, averageScore);
-//                    characteristics.put(Constants.NICE_SCORE_HISTORY, child.niceScoreHistory);
-//                    characteristics.put(Constants.ASSIGNED_BUDGET, child.assignedBudget);
-//                    characteristics.put(Constants.RECEIVED_GIFTS, child.receivedGifts);
-//
-//
-//                    childrenArray.add(characteristics);
-//                    children.put("children", childrenArray);
-//                    annualChildrenJSON.add(children);
-//                }
-//
-//
-//        }
-//    }
+    public String getFilename() {
+        return filename;
+    }
 
-    public void closeJSON(AnnualChildren annualChildren){
-        try {
-           //outputJSON.put("annualChildren", annualChildrenJSON);
-            //myWriter.write(mapper.writerWithDefaultPrettyPrinter().writeValueAsString(outputJSON));
-            this.mapper.writeValue(new File(filename), annualChildren);
-            //myWriter.flush();
-            //myWriter.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public void setFilename(final String filename) {
+        this.filename = filename;
+    }
+
+    public ObjectMapper getMapper() {
+        return mapper;
+    }
+
+    public void setMapper(final ObjectMapper mapper) {
+        this.mapper = mapper;
     }
 }

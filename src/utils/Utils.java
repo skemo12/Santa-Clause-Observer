@@ -1,17 +1,16 @@
-package Utils;
+package utils;
 
-
-import common.Constants;
 import data.Child;
 import data.Database;
-import data.Santa;
-import org.json.simple.JSONObject;
 
-public class Utils {
+import java.util.Objects;
+
+public final class Utils {
     /**
      * Make it singleton
      */
     private static Utils utils = null;
+
     /**
      * Singleton function
      */
@@ -22,29 +21,37 @@ public class Utils {
         return utils;
     }
 
-    public Child getChildById (Integer id) {
+    /**
+     * Returns the child who has the id from parameters.
+     *
+     * @param id wanted id to find
+     */
+    public Child getChildById(final Integer id) {
         for (Child child : Database.getInstance().getChildren()) {
-            if (child.id.equals(id)) {
+            if (child.getId().equals(id)) {
                 return child;
             }
         }
         return null;
     }
 
-    public void increaseAge () {
+    /**
+     * Increases the ages of all childs.
+     */
+    public void increaseAge() {
         for (Child child : Database.getInstance().getChildren()) {
-            child.age++;
+            child.setAge(child.getAge() + 1);
         }
     }
-    public void updateBudget (int year) {
-        Santa santa = Database.getInstance().getSanta();
-        Double newBudget = Database.getInstance().getAnnualChanges().get(year).getNewSantaBudget();
-        santa.setSantaBudget(newBudget);
-    }
-    public int getIndexOfChild(Child child) {
+
+    /**
+     * Returns the index of a child in list, searched by id, not Child object.
+     * @param child child whose id we want to find the index of
+     */
+    public int getIndexOfChild(final Child child) {
         for (int i = 0; i < Database.getInstance().getChildren().size(); i++) {
             Child childCurrent = Database.getInstance().getChildren().get(i);
-            if (childCurrent.id == child.id) {
+            if (Objects.equals(childCurrent.getId(), child.getId())) {
                 return i;
             }
         }

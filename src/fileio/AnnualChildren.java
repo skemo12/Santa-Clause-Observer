@@ -1,27 +1,27 @@
 package fileio;
 
-import data.Child;
-import data.Database;
-
 import java.util.ArrayList;
 import java.util.List;
 
-public class AnnualChildren {
-    List<ChildrenChanges> annualChildren;
+public final class AnnualChildren {
+    private List<ChildrenChanges> annualChildren;
 
     public AnnualChildren() {
-        this.annualChildren = new ArrayList<>();
+        this.setAnnualChildren(new ArrayList<>());
     }
 
     public List<ChildrenChanges> getAnnualChildren() {
         return annualChildren;
     }
 
-    public void setAnnualChildren(List<ChildrenChanges> annualChildren) {
+    public void setAnnualChildren(final List<ChildrenChanges> annualChildren) {
         this.annualChildren = annualChildren;
     }
 
-    public void addYear(ChildrenChanges childrenChanges) {
-        annualChildren.add(childrenChanges);
+    /**
+     * Adds the result of the year to the output Object.
+     */
+    public void addYear(final ChildrenChanges childrenChanges) {
+        getAnnualChildren().add(childrenChanges);
     }
 }

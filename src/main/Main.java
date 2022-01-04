@@ -1,21 +1,15 @@
 package main;
 
-import Utils.Utils;
+import utils.Utils;
 import checker.Checker;
 import common.Constants;
-import data.Child;
 import data.Database;
 import fileio.AnnualChildren;
 import fileio.ChildrenChanges;
 import fileio.InputLoader;
 import fileio.MyWriter;
 
-import javax.xml.crypto.Data;
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
 
 /**
  * Class used to run the code
@@ -34,27 +28,34 @@ public final class Main {
 
 
         File file = new File(Constants.INPUT_PATH);
-        List<String> paths = new ArrayList<>();
-        paths = Arrays.asList(file.list());
+        String[] paths = file.list();
+
+        if (paths == null) {
+            System.out.println("No input data");
+            return;
+        }
 
 
         for (String path : paths) {
-            String input = Constants.INPUT_PATH + path;
-            String customIN = Constants.INPUT_PATH + "test14.json";
-            InputLoader inputLoader = new InputLoader(input);
+
+            // Read input file
+            String inputFilename = Constants.INPUT_PATH + path;
+            InputLoader inputLoader = new InputLoader(inputFilename);
             inputLoader.readData();
+
+            // Prepare output file
             String index = path.replaceAll("[^0-9]", "");
             String outputFilename = Constants.OUTPUT_PATH + index + Constants.JSON_EXTENSION;
-            String customOUT = Constants.OUTPUT_PATH + 14 + Constants.JSON_EXTENSION;
             MyWriter writer = new MyWriter(outputFilename);
+
             AnnualChildren annualChildren = new AnnualChildren();
-            for (int i = 0; i<=Database.getInstance().getNumberOfYears(); i++) {
+            for (int i = 0; i <= Database.getInstance().getNumberOfYears(); i++) {
                 Database.getInstance().getSanta().giveGifts();
-                ChildrenChanges childrenChanges = new ChildrenChanges(Database.getInstance().getChildren());
+                ChildrenChanges childrenChanges = new ChildrenChanges(Database
+                        .getInstance().getChildren());
                 annualChildren.addYear(childrenChanges);
                 Utils.getInstance().increaseAge();
                 if (i != Database.getInstance().getNumberOfYears()) {
-                    Utils.getInstance().updateBudget(i);
                     Database.getInstance().updateDatabaseByYear(i);
                 }
 

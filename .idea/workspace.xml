@@ -4,16 +4,30 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d662010a-d6c5-4bb5-92a6-5b13c2206c94" name="Changes" comment="InputLoader finished, working on output done, must work on passing tests (0 points), readme not done. --&gt; modify niceScoreHistory method">
+    <list default="true" id="d662010a-d6c5-4bb5-92a6-5b13c2206c94" name="Changes" comment="InputLoader finished, tests done, readme not done. --&gt; modify structure elements and no readme">
+      <change afterPath="$PROJECT_DIR$/src/data/AnnualChanges.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/interfaces/SantaVisitorInterface.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/interfaces/Visitable.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/checkstyle-idea.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/checkstyle-idea.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/checkstyle.txt" beforeDir="false" afterPath="$PROJECT_DIR$/checkstyle.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Utils/Utils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Utils/Utils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/data/AnnualChange.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/data/AnnualChange.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Interface/SantaVisitorInterface.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Interface/Visitable.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Utils/Utils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/Utils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/common/Constants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/Constants.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/data/AnnualChange.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/data/Baby.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/data/Baby.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/data/Child.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/data/Child.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/data/ChildUpdate.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/data/ChildUpdate.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/data/Database.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/data/Database.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/data/Gift.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/data/Gift.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/data/Kid.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/data/Kid.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/data/Santa.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/data/Santa.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/data/Teen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/data/Teen.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/fileio/AnnualChildren.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fileio/AnnualChildren.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/fileio/ChildrenChanges.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fileio/ChildrenChanges.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/fileio/InputLoader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fileio/InputLoader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/fileio/MyWriter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fileio/MyWriter.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/Main.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -41,6 +55,9 @@
       <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
     </file-type-list>
   </component>
+  <component name="ProblemsViewState">
+    <option name="selectedIndex" value="1" />
+  </component>
   <component name="ProjectId" id="21v2UmCFgudLtO2NUqgyGG5QiA1" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
@@ -51,11 +68,11 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/checker/poo_checks.xml" />
     <property name="project.structure.last.edited" value="SDKs" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="org.jetbrains.plugins.github.ui.GithubSettingsConfigurable" />
+    <property name="settings.editor.selected.configurable" value="org.infernus.idea.checkstyle.CheckStyleConfigurable" />
   </component>
   <component name="RunManager">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
@@ -102,7 +119,14 @@
       <option name="project" value="LOCAL" />
       <updated>1641226233435</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="InputLoader finished, tests done, readme not done. --&gt; modify structure elements and no readme">
+      <created>1641251895900</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1641251895900</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -120,17 +144,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="InputLoader finished, working on outputCreation and passing tests (0 points), readme not done." />
     <MESSAGE value="InputLoader finished, working on output done, must work on passing tests (0 points), readme not done. --&gt; modify niceScoreHistory method" />
-    <option name="LAST_COMMIT_MESSAGE" value="InputLoader finished, working on output done, must work on passing tests (0 points), readme not done. --&gt; modify niceScoreHistory method" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/data/Database.java</url>
-          <line>75</line>
-          <option name="timeStamp" value="25" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
+    <MESSAGE value="InputLoader finished, tests done, readme not done. --&gt; modify structure elements and no readme" />
+    <option name="LAST_COMMIT_MESSAGE" value="InputLoader finished, tests done, readme not done. --&gt; modify structure elements and no readme" />
   </component>
 </project>
