@@ -1,14 +1,19 @@
-package data;
+package annualchanges;
+
+import enums.Category;
 
 import java.util.List;
 
+/**
+ * Class that stores the data of a child update from input
+ */
 public final class ChildUpdate {
     private Integer id;
     private Double niceScore;
-    private List<String> giftsPreferences;
+    private List<Category> giftsPreferences;
 
     public ChildUpdate(final Integer id, final Double niceScore,
-                       final List<String> giftsPreferences) {
+                       final List<Category> giftsPreferences) {
         this.setId(id);
         this.setNiceScore(niceScore);
         this.setGiftsPreferences(giftsPreferences);
@@ -30,11 +35,11 @@ public final class ChildUpdate {
         this.niceScore = niceScore;
     }
 
-    public List<String> getGiftsPreferences() {
+    public List<Category> getGiftsPreferences() {
         return giftsPreferences;
     }
 
-    public void setGiftsPreferences(final List<String> giftsPreferences) {
+    public void setGiftsPreferences(final List<Category> giftsPreferences) {
         this.giftsPreferences = giftsPreferences;
     }
 }

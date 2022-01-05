@@ -2,10 +2,14 @@ package fileio;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import data.Database;
 
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * Class that writes output in JSON format.
+ */
 public final class MyWriter {
 
     private String filename;
@@ -21,10 +25,11 @@ public final class MyWriter {
     /**
      * Writes the output to the JSON file with which the writer was created.
      */
-    public void closeJSON(final AnnualChildren annualChildren) {
+    public void closeJSON() {
         try {
             this.getMapper().writeValue(
-                    new File(getFilename()), annualChildren);
+                    new File(getFilename()), Database
+                            .getInstance().getAllYearsChildren());
         } catch (IOException e) {
             e.printStackTrace();
         }

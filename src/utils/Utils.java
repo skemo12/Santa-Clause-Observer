@@ -1,8 +1,12 @@
 package utils;
 
-import data.Child;
+import child.Child;
 import data.Database;
+import enums.Category;
+import enums.Cities;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public final class Utils {
@@ -34,16 +38,6 @@ public final class Utils {
         }
         return null;
     }
-
-    /**
-     * Increases the ages of all childs.
-     */
-    public void increaseAge() {
-        for (Child child : Database.getInstance().getChildren()) {
-            child.setAge(child.getAge() + 1);
-        }
-    }
-
     /**
      * Returns the index of a child in list, searched by id, not Child object.
      * @param child child whose id we want to find the index of
@@ -56,5 +50,53 @@ public final class Utils {
             }
         }
         return -1;
+    }
+
+    /**
+     * Converts string to Category ENUM.
+     * @param category string to be converted
+     */
+    public Category stringToCategory(final String category) {
+        return switch (category) {
+            case "Board Games" -> Category.BOARD_GAMES;
+            case "Books" -> Category.BOOKS;
+            case "Clothes" -> Category.CLOTHES;
+            case "Sweets" -> Category.SWEETS;
+            case "Technology" -> Category.TECHNOLOGY;
+            case "Toys" -> Category.TOYS;
+            default -> null;
+        };
+    }
+
+    /**
+     * Converts string to Cities ENUM.
+     * @param city string to be converted
+     */
+    public Cities stringToCity(final String city) {
+        return switch (city) {
+            case "Bucuresti" -> Cities.BUCURESTI;
+            case "Constanta" -> Cities.CONSTANTA;
+            case "Buzau" -> Cities.BUZAU;
+            case "Timisoara" -> Cities.TIMISOARA;
+            case "Cluj-Napoca" -> Cities.CLUJ;
+            case "Iasi" -> Cities.IASI;
+            case "Craiova" -> Cities.CRAIOVA;
+            case "Brasov" -> Cities.BRASOV;
+            case "Braila" -> Cities.BRAILA;
+            case "Oradea" -> Cities.ORADEA;
+            default -> null;
+        };
+    }
+
+    /**
+     * Converts List to List Category ENUM.
+     * @param list list to be converted
+     */
+    public List<Category> stringListToCategoryList(final List<String> list) {
+        List<Category> categories = new ArrayList<>();
+        for (String element : list) {
+            categories.add(Utils.getInstance().stringToCategory(element));
+        }
+        return categories;
     }
 }

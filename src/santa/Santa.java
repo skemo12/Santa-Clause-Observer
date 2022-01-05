@@ -1,5 +1,11 @@
-package data;
+package santa;
 
+import child.Baby;
+import child.Child;
+import child.Kid;
+import child.Teen;
+import data.Database;
+import enums.Category;
 import interfaces.SantaVisitorInterface;
 import utils.Utils;
 import common.Constants;
@@ -9,6 +15,10 @@ import java.util.Collections;
 import java.util.List;
 import java.util.ListIterator;
 
+/**
+ * Class that stores the data of Santa, implements SantaVisitorInterface
+ * because Santa is the visitor of every Child.
+ */
 public final class Santa implements SantaVisitorInterface {
     /**
      * Class for Santa
@@ -75,13 +85,13 @@ public final class Santa implements SantaVisitorInterface {
             double budgetChild = budgetUnit * child.getAverageScore();
             child.setAssignedBudget(budgetChild);
             double currBudget = 0.0;
-            for (String giftPreferences : child.getGiftsPreferences()) {
+            for (Category giftPreferences : child.getGiftsPreferences()) {
                 if (Double.compare(currBudget, budgetChild) == 0) {
                     break;
                 }
                 List<Gift> giftsPerCategory = new ArrayList<>();
                 for (Gift gift : giftsList) {
-                    if (gift.getCategory().equalsIgnoreCase(giftPreferences)) {
+                    if (gift.getCategory() == giftPreferences) {
                         double auxBudget = gift.getPrice() + currBudget;
                         if (Double.compare(auxBudget, budgetChild) < 0) {
                             giftsPerCategory.add(gift);

@@ -2,21 +2,25 @@ package fileio;
 
 import common.Constants;
 import data.Database;
-import data.Child;
-import data.Gift;
-import data.AnnualChanges;
-import data.ChildUpdate;
-import data.Santa;
+import child.Child;
+import santa.Gift;
+import annualchanges.AnnualChanges;
+import annualchanges.ChildUpdate;
+import santa.Santa;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import utils.Utils;
 
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Class that reads input from JSON file.
+ */
 public final class InputLoader {
     /**
      * The path to the input file
@@ -55,8 +59,8 @@ public final class InputLoader {
 
             List<Child> children = readChildList(jsonChildren);
             List<Gift> giftList = readGiftsList(jsonSantaGiftsList);
-
-            List<AnnualChanges> annualChanges = readAnnualChanges(jsonAnnualChanges);
+            List<AnnualChanges> annualChanges = readAnnualChanges(
+                    jsonAnnualChanges);
 
             Database.getInstance().setNumberOfYears(numberOfYears);
             Database.getInstance().setChildren(children);
@@ -94,9 +98,11 @@ public final class InputLoader {
                                 .get(Constants.FIRST_NAME),
                         (String) ((JSONObject) jsonChild)
                                 .get(Constants.LAST_NAME),
-                        (String) ((JSONObject) jsonChild)
-                                .get(Constants.CITY),
-                        giftPreferences));
+                        Utils.getInstance().stringToCity(
+                                (String) ((JSONObject) jsonChild)
+                                        .get(Constants.CITY)),
+                        Utils.getInstance()
+                                .stringListToCategoryList(giftPreferences)));
             }
         }
         return children;
@@ -114,8 +120,9 @@ public final class InputLoader {
                                 .get(Constants.PRODUCT_NAME),
                         ((Long) ((JSONObject) jsonGift)
                                 .get(Constants.PRICE)).doubleValue(),
-                        (String) ((JSONObject) jsonGift)
-                                .get(Constants.CATEGORY)
+                        Utils.getInstance().stringToCategory(
+                                (String) ((JSONObject) jsonGift)
+                                .get(Constants.CATEGORY))
                 );
                 giftList.add(gift);
             }
@@ -172,7 +179,9 @@ public final class InputLoader {
                         giftsPreferences.add((String) jsonGiftPreference);
                     }
                     childrenUpdates.add(new ChildUpdate(id, niceScore,
-                            giftsPreferences));
+                            Utils.getInstance()
+                                    .stringListToCategoryList(
+                                            giftsPreferences)));
                 }
                 annualChanges.add(new AnnualChanges(newSantaBudget, newGifts,
                         newChildren, childrenUpdates));

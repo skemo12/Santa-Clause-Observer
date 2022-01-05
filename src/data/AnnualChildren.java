@@ -1,14 +1,17 @@
-package fileio;
+package data;
 
-import data.Child;
+import child.Child;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public final class ChildrenChanges {
+/**
+ * Class that stores all changes from 1 year. Used for output.
+ */
+public final class AnnualChildren {
     private List<Child> children;
 
-    public ChildrenChanges(final List<Child> children) {
+    public AnnualChildren(final List<Child> children) {
         this.setChildren(new ArrayList<>());
         for (Child child : children) {
             Child newChild = new Child(child);

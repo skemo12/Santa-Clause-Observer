@@ -1,8 +1,8 @@
 package interfaces;
 
-import data.Baby;
-import data.Kid;
-import data.Teen;
+import child.Baby;
+import child.Kid;
+import child.Teen;
 
 public interface SantaVisitorInterface {
     /**

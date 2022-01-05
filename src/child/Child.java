@@ -1,17 +1,24 @@
-package data;
+package child;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import santa.Gift;
+import enums.Category;
+import enums.Cities;
 
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Class that stores the data of a child, implements comparable for sorting by
+ * id.
+ */
 public class Child implements Comparable<Child> {
     private Integer id;
     private String lastName;
     private String firstName;
-    private String city;
+    private Cities city;
     private Integer age;
-    private List<String> giftsPreferences;
+    private List<Category> giftsPreferences;
     @JsonIgnore
     private Double niceScore;
     private Double averageScore;
@@ -35,7 +42,7 @@ public class Child implements Comparable<Child> {
 
     public Child(final Integer id, final Integer age, final Double niceScore,
                  final String firstName, final String lastName,
-                 final String city, final List<String> giftsPreferences) {
+                 final Cities city, final List<Category>  giftsPreferences) {
         this.setId(id);
         this.setAge(age);
         this.setNiceScore(niceScore);
@@ -88,13 +95,13 @@ public class Child implements Comparable<Child> {
     /**
      * Getter for city
      */
-    public String getCity() {
+    public Cities getCity() {
         return city;
     }
     /**
      * Setter for city
      */
-    public void setCity(final String city) {
+    public void setCity(final Cities city) {
         this.city = city;
     }
     /**
@@ -112,13 +119,13 @@ public class Child implements Comparable<Child> {
     /**
      * Getter for giftsPreferences
      */
-    public List<String> getGiftsPreferences() {
+    public List<Category> getGiftsPreferences() {
         return giftsPreferences;
     }
     /**
      * Setter for giftsPreferences
      */
-    public void setGiftsPreferences(final List<String> giftsPreferences) {
+    public void setGiftsPreferences(final List<Category> giftsPreferences) {
         this.giftsPreferences = giftsPreferences;
     }
     /**

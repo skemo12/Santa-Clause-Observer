@@ -1,11 +1,8 @@
 package main;
 
-import utils.Utils;
 import checker.Checker;
 import common.Constants;
 import data.Database;
-import fileio.AnnualChildren;
-import fileio.ChildrenChanges;
 import fileio.InputLoader;
 import fileio.MyWriter;
 
@@ -34,7 +31,14 @@ public final class Main {
             System.out.println("No input data");
             return;
         }
-
+        File outputDir = new File(Constants.OUTPUT_DIR);
+        //Creating a folder using mkdir() method
+        if (!outputDir.exists()) {
+            boolean bool = outputDir.mkdir();
+            if (!bool) {
+                System.out.println("Output directory make failed!");
+            }
+        }
 
         for (String path : paths) {
 
@@ -45,26 +49,24 @@ public final class Main {
 
             // Prepare output file
             String index = path.replaceAll("[^0-9]", "");
-            String outputFilename = Constants.OUTPUT_PATH + index + Constants.JSON_EXTENSION;
+            String outputFilename = Constants.OUTPUT_PATH + index
+                    + Constants.JSON_EXTENSION;
             MyWriter writer = new MyWriter(outputFilename);
 
-            AnnualChildren annualChildren = new AnnualChildren();
-            for (int i = 0; i <= Database.getInstance().getNumberOfYears(); i++) {
+            // Running for number of years + round 0
+            for (int i = 0; i <= Database.getInstance().
+                    getNumberOfYears(); i++) {
+
                 Database.getInstance().getSanta().giveGifts();
-                ChildrenChanges childrenChanges = new ChildrenChanges(Database
-                        .getInstance().getChildren());
-                annualChildren.addYear(childrenChanges);
-                Utils.getInstance().increaseAge();
+                Database.getInstance().saveYear();
                 if (i != Database.getInstance().getNumberOfYears()) {
                     Database.getInstance().updateDatabaseByYear(i);
                 }
 
             }
-            writer.closeJSON(annualChildren);
+            writer.closeJSON();
             Database.renewDatabase();
         }
-
-
         Checker.calculateScore();
     }
 }

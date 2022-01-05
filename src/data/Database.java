@@ -1,16 +1,27 @@
 package data;
 
+import annualchanges.AnnualChanges;
+import annualchanges.ChildUpdate;
+import child.Child;
+import enums.Category;
+import santa.Gift;
+import santa.Santa;
 import utils.Utils;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * Class that stores all the data from input.
+ */
 public final class Database {
+
     private Integer numberOfYears;
     private Santa santa;
     private List<Child> children;
     private List<AnnualChanges> annualChanges;
+    private AllYearsChildren allYearsChildren;
 
     /**
      * Make it singleton
@@ -59,10 +70,19 @@ public final class Database {
         this.annualChanges = annualChanges;
     }
 
+    public AllYearsChildren getAllYearsChildren() {
+        return allYearsChildren;
+    }
+
+    public void setAllYearsChildren(final AllYearsChildren allYearsChildren) {
+        this.allYearsChildren = allYearsChildren;
+    }
+
     /**
      * Applies annual changes to database
      */
     public void updateDatabaseByYear(final int i) {
+        increaseChildrenAge();
         AnnualChanges annualChange = Database.getInstance()
                 .getAnnualChanges().get(i);
 
@@ -86,22 +106,39 @@ public final class Database {
                     child.getNiceScoreHistory().add(childUpdate.getNiceScore());
                     child.setNiceScore(childUpdate.getNiceScore());
                 }
-                List<String> giftPrefs = new ArrayList<>();
-                for (String gift : childUpdate.getGiftsPreferences()) {
+                List<Category> giftPrefs = new ArrayList<>();
+                for (Category gift : childUpdate.getGiftsPreferences()) {
                     if (!giftPrefs.contains(gift)) {
                         giftPrefs.add(gift);
                     }
                 }
-                for (String gift : child.getGiftsPreferences()) {
+                for (Category gift : child.getGiftsPreferences()) {
                     if (!giftPrefs.contains(gift)) {
                         giftPrefs.add(gift);
                     }
                 }
                 child.setGiftsPreferences(giftPrefs);
             }
-
         }
     }
+    /**
+     * Increases the ages of all children.
+     */
+    public void increaseChildrenAge() {
+        for (Child child : Database.getInstance().getChildren()) {
+            child.setAge(child.getAge() + 1);
+        }
+    }
+    /**
+     * Saves year for output
+     */
+    public void saveYear() {
+        if (allYearsChildren == null) {
+            allYearsChildren = new AllYearsChildren();
+        }
+        allYearsChildren.addYear();
+    }
+
     /**
      * Completely resets database to prepare for new input file.
      */
