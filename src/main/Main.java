@@ -42,6 +42,10 @@ public final class Main {
 
         for (String path : paths) {
 
+            // Check whether file is actually a test file
+            if (!path.startsWith(Constants.TEST_NAME)) {
+                continue;
+            }
             // Read input file
             String inputFilename = Constants.INPUT_PATH + path;
             InputLoader inputLoader = new InputLoader(inputFilename);

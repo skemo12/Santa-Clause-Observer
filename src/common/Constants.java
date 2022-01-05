@@ -16,6 +16,7 @@ public final class Constants {
      * My constants
      */
     public static final String INPUT_PATH = "tests/";
+    public static final String TEST_NAME = "test";
     public static final String JSON_EXTENSION = ".json";
     public static final String OUTPUT_DIR = "output";
     public static final String INITIAL_DATA = "initialData";

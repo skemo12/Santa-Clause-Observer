@@ -28,6 +28,9 @@ care se actualizeaza baza de date prin incrementarea varstei copiilor si
 aplicarea modificarilor date de input.
 
     Toate constantele folosite se gasesc in clasa Constants (data de schelet),
-in ea am adaugat si constantele mele.
+in ea am adaugat si constantele mele. In main verific daca fisierul de intrare
+incepe cu "test" pentru a nu citi din fisiere straine (pe vmchecker exista un
+.DS aparent si nu e prea ok sa incerc sa citesc din el, el neavand nici extensia
+de JSON).
 
         --- Multumesc frumos pentru atentie si feedback! ---

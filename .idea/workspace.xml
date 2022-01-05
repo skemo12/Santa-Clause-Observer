@@ -4,26 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d662010a-d6c5-4bb5-92a6-5b13c2206c94" name="Changes" comment="InputLoader finished, tests done, checkstyle done, readme not done, needs extra commentaries and javadoc">
-      <change afterPath="$PROJECT_DIR$/src/data/AllYearsChildren.java" afterDir="false" />
+    <list default="true" id="d662010a-d6c5-4bb5-92a6-5b13c2206c94" name="Changes" comment="Project done">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README" beforeDir="false" afterPath="$PROJECT_DIR$/README" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/data/AnnualChanges.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/annualchanges/AnnualChanges.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/data/Baby.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/child/Baby.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/data/Child.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/child/Child.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/data/ChildUpdate.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/annualchanges/ChildUpdate.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/data/Database.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/data/Database.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/data/Gift.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/santa/Gift.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/data/Kid.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/child/Kid.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/data/Santa.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/santa/Santa.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/data/Teen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/child/Teen.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fileio/AnnualChildren.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fileio/ChildrenChanges.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/data/AnnualChildren.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fileio/InputLoader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fileio/InputLoader.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fileio/MyWriter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fileio/MyWriter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/interfaces/SantaVisitorInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/interfaces/SantaVisitorInterface.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/common/Constants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/Constants.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/Utils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/Utils.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -134,7 +119,14 @@
       <option name="project" value="LOCAL" />
       <updated>1641320173425</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Project done">
+      <created>1641344245696</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1641344245696</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -154,6 +146,7 @@
     <MESSAGE value="InputLoader finished, working on output done, must work on passing tests (0 points), readme not done. --&gt; modify niceScoreHistory method" />
     <MESSAGE value="InputLoader finished, tests done, readme not done. --&gt; modify structure elements and no readme" />
     <MESSAGE value="InputLoader finished, tests done, checkstyle done, readme not done, needs extra commentaries and javadoc" />
-    <option name="LAST_COMMIT_MESSAGE" value="InputLoader finished, tests done, checkstyle done, readme not done, needs extra commentaries and javadoc" />
+    <MESSAGE value="Project done" />
+    <option name="LAST_COMMIT_MESSAGE" value="Project done" />
   </component>
 </project>
